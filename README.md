@@ -4,7 +4,6 @@
     </a>
 <h5 align="center"> ValoAssist</h5>
 
-[![Discord][discord-shield]][discord-url]
 [![Downloads][downloads-shield]][downloads-url]
     
  
@@ -12,7 +11,6 @@
     <li><a href="#about-the-project">About The Project</a></li>
     <li><a href="#usage">Usage</a></li>
     <li><a href="#contributing">Contributing</a></li>
-    <li><a href="#contact">Contact</a></li>
     <li><a href="#acknowledgements">Acknowledgements</a></li>
     <li><a href="#disclaimer">Disclaimer</a></li>
   </ol>
@@ -77,12 +75,6 @@ If you want to make a small change to the application, you can:
 ## Contributing
 
  Any contributions you make are **greatly appreciated**.
- 
-## Contact 
-
- Join the community discord:         
- 
-[![Discord Banner 2][discord-banner]][discord-url]
 
 ## Acknowledgements
 
