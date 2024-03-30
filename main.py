@@ -156,8 +156,8 @@ try:
 
     #print("\nVAS Mobile", color(f"- {get_ip()}:{cfg.port}", fore=(255, 127, 80)))
 
-    #print(color("\nVisit https://VAS.netlify.app/scottjsh/ValoAssist to view full player inventories\n", fore=(255, 253, 205)))
-    #chatlog(color("\nVisit https://VAS.netlify.app/scottjsh/ValoAssist to view full player inventories\n", fore=(255, 253, 205)))
+    print(color("\nVisit https://whitesky.kr/ValoAssist/ to view full player inventories\n", fore=(255, 253, 205)))
+    chatlog(color("\nVisit https://whitesky.kr/ValoAssist/ to view full player inventories\n", fore=(255, 253, 205)))
 
 
     richConsole = RichConsole()
