@@ -41,11 +41,17 @@ from src.account_manager.account_auth import AccountAuth
 
 urllib3.disable_warnings(urllib3.exceptions.InsecureRequestWarning)
 
-os.system(f"title ValoAssist v{version}")
+title_with_version = f"ValoAssist v{version}"
+
+os.system(f"title {title_with_version}")
 
 server = ""
 
-os.system("mode con cols=200 lines=50")
+#os.system("mode con cols=200 lines=50")
+
+import pygetwindow
+win = pygetwindow.getWindowsWithTitle(title_with_version)[0]
+win.size = (1536, 864)
 
 def program_exit(status: int):  # so we don't need to import the entire sys module
     log(f"exited program with error code {status}")
