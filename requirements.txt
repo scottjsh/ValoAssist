@@ -17,4 +17,4 @@ urllib3==2.0.7
 wcwidth==0.2.6
 websocket-server==0.6.4
 websockets==11.0.3
-pygetwindow==0.0.9
+pywin32

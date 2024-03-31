@@ -49,9 +49,15 @@ server = ""
 
 #os.system("mode con cols=200 lines=50")
 
-import pygetwindow
-win = pygetwindow.getWindowsWithTitle(title_with_version)[0]
-win.size = (1536, 864)
+#import pygetwindow
+#win = pygetwindow.getWindowsWithTitle(title_with_version)[0]
+#win.size = (1536, 864)
+
+import pywintypes
+import win32gui
+hwnd = win32gui.FindWindow(None, title_with_version)
+x0, y0, x1, y1 = win32gui.GetWindowRect(hwnd)
+win32gui.MoveWindow(hwnd, x0, y0, x0+1536, y0+864, True)
 
 def program_exit(status: int):  # so we don't need to import the entire sys module
     log(f"exited program with error code {status}")
