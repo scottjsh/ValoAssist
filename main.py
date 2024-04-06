@@ -55,27 +55,16 @@ server = ""
 
 import pywintypes
 import win32gui
-search_title = f"*{title_with_version}"
-hwnd = win32gui.FindWindow(None, search_title)
-x0, y0, x1, y1 = win32gui.GetWindowRect(hwnd)
-win32gui.MoveWindow(hwnd, x0, y0, x0+1536, y0+864, True)
-"""
-try:
-    hwnd = win32gui.FindWindow(None, title_with_version)
-    x0, y0, x1, y1 = win32gui.GetWindowRect(hwnd)
-    win32gui.MoveWindow(hwnd, x0, y0, x0+1536, y0+864, True)
-except:
+os_string = get_os()
+if "Windows 10" in os_string:
+    os.system("mode con cols=200 lines=50")
+else:
     try:
-        first_except = f"관리자: {title_with_version}"
-        hwnd = win32gui.FindWindow(None, first_except)
+        hwnd = win32gui.FindWindow(None, title_with_version)
         x0, y0, x1, y1 = win32gui.GetWindowRect(hwnd)
         win32gui.MoveWindow(hwnd, x0, y0, x0+1536, y0+864, True)
     except:
-        second_except = f"Administrator: {title_with_version}"
-        hwnd = win32gui.FindWindow(None, second_except)
-        x0, y0, x1, y1 = win32gui.GetWindowRect(hwnd)
-        win32gui.MoveWindow(hwnd, x0, y0, x0+1536, y0+864, True)
-"""
+        print("Do not run with administrator privileges")
 
 def program_exit(status: int):  # so we don't need to import the entire sys module
     log(f"exited program with error code {status}")
