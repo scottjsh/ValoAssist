@@ -61,12 +61,12 @@ try:
     win32gui.MoveWindow(hwnd, x0, y0, x0+1536, y0+864, True)
 except:
     try:
-        first_except = f"관리자:  {title_with_version}"
+        first_except = f"관리자: {title_with_version}"
         hwnd = win32gui.FindWindow(None, first_except)
         x0, y0, x1, y1 = win32gui.GetWindowRect(hwnd)
         win32gui.MoveWindow(hwnd, x0, y0, x0+1536, y0+864, True)
     except:
-        second_except = f"Administrator:  {title_with_version}"
+        second_except = f"Administrator: {title_with_version}"
         hwnd = win32gui.FindWindow(None, second_except)
         x0, y0, x1, y1 = win32gui.GetWindowRect(hwnd)
         win32gui.MoveWindow(hwnd, x0, y0, x0+1536, y0+864, True)
