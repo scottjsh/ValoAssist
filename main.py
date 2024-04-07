@@ -58,13 +58,19 @@ import win32gui
 os_string = get_os()
 if "Windows 10" in os_string:
     os.system("mode con cols=200 lines=50")
-else:
+elif "Windows 11" in os_string:
     try:
         hwnd = win32gui.FindWindow(None, title_with_version)
         x0, y0, x1, y1 = win32gui.GetWindowRect(hwnd)
         win32gui.MoveWindow(hwnd, x0, y0, x0+1536, y0+864, True)
     except:
-        print("Do not run with administrator privileges")
+        print("Do not run with administrator privileges.")
+        input("press enter to exit...\n")
+        os._exit(1)
+else:
+    print("This tool only supports Windows 10, Windows 11.")
+    input("press enter to exit...\n")
+    os._exit(1)
 
 def program_exit(status: int):  # so we don't need to import the entire sys module
     log(f"exited program with error code {status}")
