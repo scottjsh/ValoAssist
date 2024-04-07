@@ -32,7 +32,7 @@
 ### Bundled Release:
 
 1) Download [Microsoft Visual C++ Libraries](https://github.com/abbodi1406/vcredist/releases)
-2) Download the [release](https://github.com/scottjsh/ValAssist/releases/latest).
+2) Download the [release](https://github.com/scottjsh/ValoAssist/releases/latest).
 3) Extract **all** files.
 4) Run VAS.exe.
 
@@ -40,7 +40,7 @@
 
 1) Download [Python 3.10](https://www.python.org/downloads/release/python-3100/), make sure it is added to the PATH. (This is an option on installation.)
    1) Any Python version post 3.10 should work.
-2) Download the [source](https://github.com/scottjsh/ValAssist/archive/refs/heads/main.zip).
+2) Download the [source](https://github.com/scottjsh/ValoAssist/archive/refs/heads/main.zip).
 3) Open a terminal within the source folder.
 4) `pip install -r requirements.txt`
 5) `main.py`
@@ -55,13 +55,13 @@
 
 ### Letting Github Build It:
 
-The latest commits to the `main` branch will be built by a [Github Actions](https://github.com/scottjsh/ValAssist/actions) workflow 
+The latest commits to the `main` branch will be built by a [Github Actions](https://github.com/scottjsh/ValoAssist/actions) workflow 
 and a successful build should result in a compiled artifact that you can download and try out.
-See the [Actions tab](https://github.com/scottjsh/ValAssist/actions), click on the `Build` workflow, 
+See the [Actions tab](https://github.com/scottjsh/ValoAssist/actions), click on the `Build` workflow, 
 select a particular workflow run, and it should have an artifact available for download. 
 
 If you want to make a small change to the application, you can:
-1) [Fork](https://github.com/scottjsh/ValAssist/fork) this project.
+1) [Fork](https://github.com/scottjsh/ValoAssist/fork) this project.
 2) Change the code in your forked repository.
 3) Let the Github Actions workflow build VAS.exe for you.
 4) Download it and test it.
