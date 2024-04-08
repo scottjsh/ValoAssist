@@ -58,6 +58,7 @@ AGENTCOLORLIST = {
     "brimstone": (217, 122, 46),
     "cypher": (245, 240, 230),
     "chamber": (200, 200, 200),
+    "clove": (113, 42, 232),
     "deadlock": (102, 119, 176),
     "fade": (92, 92, 94),
     "jett": (154, 222, 255),
