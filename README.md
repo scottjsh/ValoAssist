@@ -2,7 +2,8 @@
     <a href="https://github.com/scottjsh/ValoAssist/">
         <img src="assets/Logo.png" alt="Logo" width="160" height="160">
     </a>
-<h5 align="center"> ValoAssist</h5>
+<h1 align="center">ValoAssist</h1>
+<h3 align="center">Only works on Win10, Win11</h3>
 
 [![Downloads][downloads-shield]][downloads-url]
     
