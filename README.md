@@ -28,9 +28,10 @@
     
 
 ## Usage
- **VALORANT must be open**.
+1) Open VALORANT
+2) Run VAS.exe **WITHOUT Administrator privilege**
 
-### Bundled Release:
+### Bundled Release(***Recommended***):
 
 1) Download [Microsoft Visual C++ Libraries](https://github.com/abbodi1406/vcredist/releases)
 2) Download the [release](https://github.com/scottjsh/ValoAssist/releases/latest).
@@ -54,20 +55,6 @@
 
 > `-` You can change the desired weapon by editing the gun in `config.json`, or by deleting the file for VAS re-prompt you.
 
-### Letting Github Build It:
-
-The latest commits to the `main` branch will be built by a [Github Actions](https://github.com/scottjsh/ValoAssist/actions) workflow 
-and a successful build should result in a compiled artifact that you can download and try out.
-See the [Actions tab](https://github.com/scottjsh/ValoAssist/actions), click on the `Build` workflow, 
-select a particular workflow run, and it should have an artifact available for download. 
-
-If you want to make a small change to the application, you can:
-1) [Fork](https://github.com/scottjsh/ValoAssist/fork) this project.
-2) Change the code in your forked repository.
-3) Let the Github Actions workflow build VAS.exe for you.
-4) Download it and test it.
-5) Submit a Pull Request if you would like your change included in future releases.
-
 ## What about that Tweet?
 
  The [Tweet](https://twitter.com/PlayVALORANT/status/1539728676815642624), which details Riot's API policies, outlines how
@@ -80,8 +67,6 @@ If you want to make a small change to the application, you can:
 ## Acknowledgements
 
  - [Valorant-API.com](https://valorant-api.com/)
- - [Hamper](https://hamper.dev/)
- - [D3CRYPT](https://d3crypt360.pages.dev/)
  
 ## Disclaimer
 

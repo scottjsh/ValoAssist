@@ -1,7 +1,7 @@
 import requests
 from colr import color
 
-version = "4.60"
+version = "4.61"
 enablePrivateLogging = True
 hide_names = True
 hide_levels = True
