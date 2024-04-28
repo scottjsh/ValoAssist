@@ -2,6 +2,7 @@ from colr import color
 from src.constants import tierDict
 import re
 
+
 class Colors:
     def __init__(self, hide_names, agent_dict, AGENTCOLORLIST):
         self.hide_names = hide_names
@@ -33,7 +34,6 @@ class Colors:
             Teamcolor = color(orig_name, fore=(221, 224, 41))
         return Teamcolor
 
-
     def get_rgb_color_from_skin(self, skin_id, valoApiSkins):
         for skin in valoApiSkins.json()["data"]:
             if skin_id == skin["uuid"]:
@@ -63,7 +63,7 @@ class Colors:
         try:
             number = int(number)
         except ValueError:
-            return color("N/a",fore=(46, 46, 46))
+            return color("N/a", fore=(46, 46, 46))
         dark_red = (64, 15, 10)
         yellow = (140, 119, 11)
         green = (18, 204, 25)
@@ -82,20 +82,24 @@ class Colors:
                     else:
                         firstHigher = False
                     if firstHigher:
-                        offset = gradients[gradient][0][rgb] - gradients[gradient][1][rgb]
+                        offset = gradients[gradient][0][rgb] - \
+                            gradients[gradient][1][rgb]
                     else:
-                        offset = gradients[gradient][1][rgb] - gradients[gradient][0][rgb]
+                        offset = gradients[gradient][1][rgb] - \
+                            gradients[gradient][0][rgb]
                     if firstHigher:
-                        f.append(int(gradients[gradient][0][rgb] - offset * number / gradient[1]))
+                        f.append(
+                            int(gradients[gradient][0][rgb] - offset * number / gradient[1]))
                     else:
-                        f.append(int(offset * number / gradient[1] + gradients[gradient][0][rgb]))
+                        f.append(
+                            int(offset * number / gradient[1] + gradients[gradient][0][rgb]))
                 return color(number, fore=f)
 
     def get_wr_gradient(self, number):
         try:
             number = int(number)
         except ValueError:
-            return color("N/a",fore=(46, 46, 46))
+            return color("N/a", fore=(46, 46, 46))
         dark_red = (64, 15, 10)
         yellow = (140, 119, 11)
         green = (18, 204, 25)
@@ -114,13 +118,17 @@ class Colors:
                     else:
                         firstHigher = False
                     if firstHigher:
-                        offset = gradients[gradient][0][rgb] - gradients[gradient][1][rgb]
+                        offset = gradients[gradient][0][rgb] - \
+                            gradients[gradient][1][rgb]
                     else:
-                        offset = gradients[gradient][1][rgb] - gradients[gradient][0][rgb]
+                        offset = gradients[gradient][1][rgb] - \
+                            gradients[gradient][0][rgb]
                     if firstHigher:
-                        f.append(int(gradients[gradient][0][rgb] - offset * number / gradient[1]))
+                        f.append(
+                            int(gradients[gradient][0][rgb] - offset * number / gradient[1]))
                     else:
-                        f.append(int(offset * number / gradient[1] + gradients[gradient][0][rgb]))
+                        f.append(
+                            int(offset * number / gradient[1] + gradients[gradient][0][rgb]))
                 return color(number, fore=f)
 
     def escape_ansi(self, line):

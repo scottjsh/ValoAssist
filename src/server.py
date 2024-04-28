@@ -8,6 +8,7 @@ logging.getLogger('websocket_server.websocket_server').disabled = True
 
 # websocket.enableTrace(True)
 
+
 class Server:
     def __init__(self, log, Error):
         self.Error = Error
@@ -27,11 +28,11 @@ class Server:
             self.Error.PortError(port)
 
     def handle_new_client(self, client, server):
-        self.send_payload("version",{
+        self.send_payload("version", {
             "core": version
         })
         for key in self.lastMessages:
-            if key not in ["chat","version"]:
+            if key not in ["chat", "version"]:
                 self.send_message(self.lastMessages[key])
 
     def send_message(self, message):

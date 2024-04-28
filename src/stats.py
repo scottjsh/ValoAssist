@@ -2,6 +2,7 @@ import os
 import time
 import json
 
+
 class Stats:
     def __init__(self):
         pass
@@ -24,13 +25,13 @@ class Stats:
                 updated_data.update({puuid: [data[puuid]]})
             else:
                 updated_data[puuid].append(data[puuid])
-        
+
         # updated_data.update(data)
         # print(updated_data)
 
         with open(os.path.join(os.getenv('APPDATA'), "VAS/stats.json"), "w") as f:
             json.dump(updated_data, f)
-    
+
     def read_data(self):
         try:
             with open(os.path.join(os.getenv('APPDATA'), "VAS/stats.json"), "r") as f:

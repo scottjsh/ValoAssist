@@ -17,15 +17,16 @@ from src.constants import version
 
 build_exe_options = {
     "path": sys.path,
-    "include_files":['configurator.bat'],
+    "include_files": ['configurator.bat'],
     "packages": ["requests", "colr", "InquirerPy", "websockets", "pypresence", "nest_asyncio", "rich", "websocket_server"],
     "excludes": ["tkinter", "test", "unittest", "pygments", "xmlrpc"]
 }
 
 setup(
-    name = "ValoAssist",
-    version = version,
+    name="ValoAssist",
+    version=version,
     description='VAS - ValoAssist',
-    executables = [Executable("main.py", icon="./assets/Logo.ico", target_name="VAS.exe")],
+    executables=[Executable(
+        "main.py", icon="./assets/Logo.ico", target_name="VAS.exe")],
     options={"build_exe": build_exe_options}
 )

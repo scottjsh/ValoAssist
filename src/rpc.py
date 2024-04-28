@@ -3,6 +3,7 @@ from pypresence.exceptions import DiscordNotFound, InvalidID
 import nest_asyncio
 import time
 
+
 class Rpc():
     def __init__(self, map_dict, gamemodes, colors, log):
         nest_asyncio.apply()
@@ -31,7 +32,6 @@ class Rpc():
         self.log("New data set in RPC")
         self.set_rpc(self.last_presence_data)
 
-
     def set_rpc(self, presence):
         if self.discord_running:
             try:
@@ -41,24 +41,27 @@ class Rpc():
                             agent_img = None
                             agent = None
                         else:
-                            agent = self.colors.agent_dict.get(self.data.get("agent").lower())
+                            agent = self.colors.agent_dict.get(
+                                self.data.get("agent").lower())
                             agent_img = agent.lower().replace("/", "")
 
                         if presence["provisioningFlow"] == "CustomGame":
                             gamemode = "Custom Game"
                         else:
                             gamemode = self.gamemodes.get(presence['queueId'])
-                        
+
                         details = f"{gamemode} // {presence['partyOwnerMatchScoreAllyTeam']} - {presence['partyOwnerMatchScoreEnemyTeam']}"
 
-                        mapText = self.map_dict.get(presence["matchMap"].lower())
+                        mapText = self.map_dict.get(
+                            presence["matchMap"].lower())
                         if mapText == "The Range":
                             mapImage = "splash_range_square"
                             details = "in Range"
                             agent_img = str(self.data.get("rank"))
                             agent = self.data.get("rank_name")
                         else:
-                            mapImage = f"splash_{self.map_dict.get(presence['matchMap'].lower())}_square".lower()
+                            mapImage = f"splash_{self.map_dict.get(presence['matchMap'].lower())}_square".lower(
+                            )
                         if mapText is None or mapText == "":
                             mapText = None
                             mapImage = None
@@ -74,7 +77,8 @@ class Rpc():
                             small_image=agent_img,
                             small_text=agent,
                             start=self.start_time,
-                            buttons=[{"label": "What's this? 👀", "url": "https://whitesky.kr/ValoAssist_web/"}]
+                            buttons=[
+                                {"label": "What's this? 👀", "url": "https://whitesky.kr/ValoAssist_web/"}]
                         )
                         self.log("RPC in-game data update")
                     elif presence["sessionLoopState"] == "MENUS":
@@ -95,7 +99,6 @@ class Rpc():
                         else:
                             gamemode = self.gamemodes.get(presence['queueId'])
 
-
                         self.rpc.update(
                             state=f"{party_string} ({presence['partySize']} of {presence['maxPartySize']})",
                             details=f" Lobby - {gamemode}",
@@ -103,7 +106,8 @@ class Rpc():
                             large_text=image_text,
                             small_image=str(self.data.get("rank")),
                             small_text=self.data.get("rank_name"),
-                            buttons=[{"label": "What's this? 👀", "url": "https://whitesky.kr/ValoAssist_web/"}]
+                            buttons=[
+                                {"label": "What's this? 👀", "url": "https://whitesky.kr/ValoAssist_web/"}]
                         )
                         self.log("RPC menu data update")
                     elif presence["sessionLoopState"] == "PREGAME":
@@ -112,12 +116,13 @@ class Rpc():
                         else:
                             gamemode = self.gamemodes.get(presence['queueId'])
 
-                        mapText = self.map_dict.get(presence["matchMap"].lower())
-                        mapImage = f"splash_{self.map_dict.get(presence['matchMap'].lower())}_square".lower()
+                        mapText = self.map_dict.get(
+                            presence["matchMap"].lower())
+                        mapImage = f"splash_{self.map_dict.get(presence['matchMap'].lower())}_square".lower(
+                        )
                         if mapText is None or mapText == "":
                             mapText = None
                             mapImage = None
-
 
                         self.rpc.update(
                             state=f"In a Party ({presence['partySize']} of {presence['maxPartySize']})",
@@ -126,7 +131,8 @@ class Rpc():
                             large_text=mapText,
                             small_image=str(self.data.get("rank")),
                             small_text=self.data.get("rank_name"),
-                            buttons=[{"label": "What's this? 👀", "url": "https://whitesky.kr/ValoAssist_web/"}]
+                            buttons=[
+                                {"label": "What's this? 👀", "url": "https://whitesky.kr/ValoAssist_web/"}]
                         )
                         self.log("RPC agent-select data update")
             except InvalidID:

@@ -1,5 +1,6 @@
 import requests
 
+
 class Content():
     def __init__(self, Requests, log):
         self.Requests = Requests
@@ -7,7 +8,8 @@ class Content():
         self.content = {}
 
     def get_content(self):
-        self.content = self.Requests.fetch("custom", f"https://shared.{self.Requests.region}.a.pvp.net/content-service/v3/content", "get")
+        self.content = self.Requests.fetch(
+            "custom", f"https://shared.{self.Requests.region}.a.pvp.net/content-service/v3/content", "get")
         return self.content
 
     def get_latest_season_id(self, content):
@@ -29,7 +31,8 @@ class Content():
         return None
 
     def get_all_agents(self):
-        rAgents = requests.get("https://valorant-api.com/v1/agents?isPlayableCharacter=true").json()
+        rAgents = requests.get(
+            "https://valorant-api.com/v1/agents?isPlayableCharacter=true").json()
         agent_dict = {}
         agent_dict.update({None: None})
         agent_dict.update({"": ""})

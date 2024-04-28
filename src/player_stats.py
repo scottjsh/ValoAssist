@@ -5,7 +5,7 @@ class PlayerStats:
         self.log = log
         self.config = config
 
-    #in future rewrite this code
+    # in future rewrite this code
     def get_stats(self, puuid):
         if not self.config.get_table_flag("headshot_percent") and not self.config.get_table_flag("kd"):
             return {
@@ -13,15 +13,17 @@ class PlayerStats:
                 "hs": "N/a"
             }
 
-        response = self.Requests.fetch('pd', f"/mmr/v1/players/{puuid}/competitiveupdates?startIndex=0&endIndex=1&queue=competitive", "get")
+        response = self.Requests.fetch(
+            'pd', f"/mmr/v1/players/{puuid}/competitiveupdates?startIndex=0&endIndex=1&queue=competitive", "get")
         try:
-            r = self.Requests.fetch('pd', f"/match-details/v1/matches/{response.json()['Matches'][0]['MatchID']}", "get")
+            r = self.Requests.fetch(
+                'pd', f"/match-details/v1/matches/{response.json()['Matches'][0]['MatchID']}", "get")
             # pyperclip.copy(str(r.json()))
-            if r.status_code == 404: # too old match
+            if r.status_code == 404:  # too old match
                 return {
-                "kd": "N/a",
-                "hs": "N/a"
-            }
+                    "kd": "N/a",
+                    "hs": "N/a"
+                }
 
             total_hits = 0
             total_headshots = 0
@@ -51,13 +53,12 @@ class PlayerStats:
                 "hs": "N/a"
             }
 
-
-            if total_hits == 0: # No hits
+            if total_hits == 0:  # No hits
                 return final
             hs = int((total_headshots/total_hits)*100)
             final["hs"] = hs
             return final
-        except IndexError: #no matches
+        except IndexError:  # no matches
             return {
                 "kd": "N/a",
                 "hs": "N/a"
@@ -79,7 +80,7 @@ if __name__ == "__main__":
     ErrorSRC = Error(log)
 
     Requests = Requests(version, log, ErrorSRC)
-    #custom region
+    # custom region
     # Requests.pd_url = "https://pd.ap.a.pvp.net"
 
     r = PlayerStats(Requests, log, "a")

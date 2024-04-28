@@ -1,8 +1,5 @@
 
 
-
-
-
 class Menu:
     def __init__(self, Requests, log, presences):
         self.Requests = Requests
@@ -13,15 +10,18 @@ class Menu:
         party_json = {}
         for presence in presencesDICT:
             if presence["puuid"] in GamePlayersPuuid:
-                decodedPresence = self.presences.decode_presence(presence["private"])
+                decodedPresence = self.presences.decode_presence(
+                    presence["private"])
                 if decodedPresence["isValid"]:
                     if decodedPresence["partySize"] > 1:
                         try:
-                            party_json[decodedPresence["partyId"]].append(presence["puuid"])
+                            party_json[decodedPresence["partyId"]].append(
+                                presence["puuid"])
                         except KeyError:
-                            party_json.update({decodedPresence["partyId"]: [presence["puuid"]]})
+                            party_json.update(
+                                {decodedPresence["partyId"]: [presence["puuid"]]})
 
-        #remove non-in-game parties from with one player in game
+        # remove non-in-game parties from with one player in game
         parties_to_delete = []
         for party in party_json:
             if len(party_json[party]) == 1:
@@ -36,16 +36,18 @@ class Menu:
         res = []
         for presence in presencesDICT:
             if presence["puuid"] == self_puuid:
-                decodedPresence = self.presences.decode_presence(presence["private"])
+                decodedPresence = self.presences.decode_presence(
+                    presence["private"])
                 if decodedPresence["isValid"]:
                     party_id = decodedPresence["partyId"]
                     res.append({"Subject": presence["puuid"], "PlayerIdentity": {"AccountLevel":
-                                                                                     decodedPresence["accountLevel"]}})
+                                                                                 decodedPresence["accountLevel"]}})
         for presence in presencesDICT:
-            decodedPresence = self.presences.decode_presence(presence["private"])
+            decodedPresence = self.presences.decode_presence(
+                presence["private"])
             if decodedPresence["isValid"]:
                 if decodedPresence["partyId"] == party_id and presence["puuid"] != self_puuid:
                     res.append({"Subject": presence["puuid"], "PlayerIdentity": {"AccountLevel":
-                                                                                     decodedPresence["accountLevel"]}})
+                                                                                 decodedPresence["accountLevel"]}})
         self.log(f"retrieved party members: {res}")
         return res

@@ -1,4 +1,6 @@
-import InquirerPy, subprocess, re
+import InquirerPy
+import subprocess
+import re
 from InquirerPy import inquirer
 
 
@@ -10,8 +12,6 @@ class AccountManager:
         self.last_account_data = None
 
         self.log("Account manager initialized")
-
-
 
     def menu_change_accounts(self):
         change_accounts_prompt = {
@@ -43,14 +43,15 @@ class AccountManager:
         change_accounts_prompt["choices"].append("Remove account")
         change_accounts_prompt["choices"].append("Back")
         result = InquirerPy.prompt(change_accounts_prompt)
-        #Add new account
+        # Add new account
         if result["menu"] == "Add new account":
             result = InquirerPy.prompt(add_account_prompt)
             option = add_account_prompt["choices"].index(result["menu"])
-            #Add account with username & password
+            # Add account with username & password
             if option == 0:
                 questions = [
-                    {"type": "input", "message": "Please type username of the account you want to add:", "name": "username"},
+                    {"type": "input", "message": "Please type username of the account you want to add:",
+                        "name": "username"},
                     {"type": "password", "message": "Please type password of the account you want to add:", "name": "password"}
                 ]
                 try_again = True
@@ -58,33 +59,40 @@ class AccountManager:
                     result = InquirerPy.prompt(questions)
                     username = result["username"]
                     password = result["password"]
-                    current_account_auth_data = self.auth.auth_account(username=username, password=password)
+                    current_account_auth_data = self.auth.auth_account(
+                        username=username, password=password)
                     if current_account_auth_data is None:
-                        try_again = inquirer.confirm(message="Invalid username or password! Do you want to try again?", default=True).execute()
+                        try_again = inquirer.confirm(
+                            message="Invalid username or password! Do you want to try again?", default=True).execute()
                     else:
                         try_again = False
                 if current_account_auth_data is None:
                     self.menu(self.last_account_data)
                 else:
                     current_account_data = self.auth.get_account_data()
-                    #SAVING NEW COOKIES BECAUSE OLD DOESN'T EXIST
-                    self.account_config.save_account_to_config(current_account_auth_data, current_account_data)
-                    #switch to new account with new auth data
-                    self.account_config.switch_to_account(current_account_auth_data)
+                    # SAVING NEW COOKIES BECAUSE OLD DOESN'T EXIST
+                    self.account_config.save_account_to_config(
+                        current_account_auth_data, current_account_data)
+                    # switch to new account with new auth data
+                    self.account_config.switch_to_account(
+                        current_account_auth_data)
 
                     self.menu(current_account_data)
-            #Add account by signing into riot client
+            # Add account by signing into riot client
             elif option == 1:
                 current_account_cookies = self.account_config.add_account_with_client()
-                current_account_auth_data = self.auth.auth_account(cookies=current_account_cookies)
+                current_account_auth_data = self.auth.auth_account(
+                    cookies=current_account_cookies)
                 if current_account_auth_data is not None:
                     current_account_data = self.auth.get_account_data()
-                    self.account_config.save_account_to_config(current_account_auth_data, current_account_data)
+                    self.account_config.save_account_to_config(
+                        current_account_auth_data, current_account_data)
                     self.menu(current_account_data)
                 else:
-                    self.log("Failed to add account with client! (cookies are fetched but auth_data is none)")
+                    self.log(
+                        "Failed to add account with client! (cookies are fetched but auth_data is none)")
                     self.menu(self.last_account_data)
-        #Remove account
+        # Remove account
         elif result["menu"] == "Remove account":
             remove_account_prompt = {
                 "type": "list",
@@ -93,42 +101,46 @@ class AccountManager:
                 "choices": accounts_list,
             }
             result = InquirerPy.prompt(remove_account_prompt)
-            account_option = remove_account_prompt["choices"].index(result["menu"])
+            account_option = remove_account_prompt["choices"].index(
+                result["menu"])
             account = account_order_list[account_option]
 
-            
             if self.last_account_data["name"] == self.account_config.accounts_data[account]["name"]:
                 self.account_config.remove_account(account)
                 self.menu(None)
             else:
                 self.account_config.remove_account(account)
                 self.menu(self.last_account_data)
-        #Back
+        # Back
         elif result["menu"] == "Back":
             self.menu(self.last_account_data)
-        #Change to: {account_name}
+        # Change to: {account_name}
         else:
-            #change to one of saved accounts
-            #no longer account name but more stats make it better in future
-            account_option = change_accounts_prompt["choices"].index(result["menu"])
+            # change to one of saved accounts
+            # no longer account name but more stats make it better in future
+            account_option = change_accounts_prompt["choices"].index(
+                result["menu"])
             account = account_order_list[account_option]
 
-            current_account_auth_data = self.auth.auth_account(cookies=self.account_config.accounts_data[account]["cookies"])
+            current_account_auth_data = self.auth.auth_account(
+                cookies=self.account_config.accounts_data[account]["cookies"])
             if current_account_auth_data is None:
                 self.log("Failed to auth account with cookies! (change accounts) ")
-                print("Cookies are invalid or have expired! Please login again. (Cookies only stays for few days, don't know why :/)")
+                print(
+                    "Cookies are invalid or have expired! Please login again. (Cookies only stays for few days, don't know why :/)")
                 self.account_config.remove_account(account)
                 self.menu(self.last_account_data)
             else:
-                #SWITCH TO ACCOUNT WITH OLD COOKIES NOT RENEWED
-                self.account_config.switch_to_account(self.account_config.accounts_data[account])
+                # SWITCH TO ACCOUNT WITH OLD COOKIES NOT RENEWED
+                self.account_config.switch_to_account(
+                    self.account_config.accounts_data[account])
 
                 current_account_data = self.auth.get_account_data()
 
-
-                #OVERRIDING ACCOUNT DATA ONLY (Cookies maybe shouldn't be renewed but rather used original data, we'll see) NOT BEING OVERRIDDEN NOW
-                #Testing with saving cookies, now happens that VAS says it is logged in but can't launch valorant because riot client is not logged in
-                self.account_config.save_account_to_config(current_account_auth_data, current_account_data, save_cookies=True)
+                # OVERRIDING ACCOUNT DATA ONLY (Cookies maybe shouldn't be renewed but rather used original data, we'll see) NOT BEING OVERRIDDEN NOW
+                # Testing with saving cookies, now happens that VAS says it is logged in but can't launch valorant because riot client is not logged in
+                self.account_config.save_account_to_config(
+                    current_account_auth_data, current_account_data, save_cookies=True)
                 self.menu(current_account_data)
 
     def menu(self, account_data):
@@ -155,24 +167,23 @@ class AccountManager:
                 ],
             }
 
-
         result = InquirerPy.prompt(menu_prompt)
         option = menu_prompt["choices"].index(result["menu"])
         if account_data != None:
-            #Logged in as....
+            # Logged in as....
             if option == 0:
                 self.start_valorant()
-            #Change accounts
+            # Change accounts
             elif option == 1:
                 self.menu_change_accounts()
-            #Start Valorant
+            # Start Valorant
             elif option == 2:
                 self.start_valorant()
         else:
-            #Not logged in
+            # Not logged in
             if option == 0:
                 self.menu_change_accounts()
-            #Log in
+            # Log in
             # elif option == 1:
                 # self.menu_change_accounts()
 
@@ -180,11 +191,13 @@ class AccountManager:
         self.log("Starting menu...")
         self.account_config.get_riot_client_path()
         current_account_cookies = self.account_config.load_current_account_cookies()
-        current_account_auth_data = self.auth.auth_account(cookies=current_account_cookies)
+        current_account_auth_data = self.auth.auth_account(
+            cookies=current_account_cookies)
         if current_account_auth_data is not None:
             self.log("Authed with cookies!")
             current_account_data = self.auth.get_account_data()
-            self.account_config.save_account_to_config(current_account_auth_data, current_account_data)
+            self.account_config.save_account_to_config(
+                current_account_auth_data, current_account_data)
             self.log("Opening menu")
             self.menu(current_account_data)
         else:
@@ -193,7 +206,8 @@ class AccountManager:
 
     def start_valorant(self):
         self.log("Starting Valorant...")
-        subprocess.Popen([self.account_config.riot_client_path, "--launch-product=valorant", "--launch-patchline=live"])
+        subprocess.Popen([self.account_config.riot_client_path,
+                         "--launch-product=valorant", "--launch-patchline=live"])
 
 # if __name__ == "__main__":
     # from account_config import AccountConfig

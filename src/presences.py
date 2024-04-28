@@ -2,13 +2,15 @@ import base64
 import json
 import time
 
+
 class Presences:
     def __init__(self, Requests, log):
         self.Requests = Requests
         self.log = log
 
     def get_presence(self):
-        presences = self.Requests.fetch(url_type="local", endpoint="/chat/v4/presences", method="get")
+        presences = self.Requests.fetch(
+            url_type="local", endpoint="/chat/v4/presences", method="get")
         return presences['presences']
 
     def get_game_state(self, presences):
@@ -17,7 +19,7 @@ class Presences:
     def get_private_presence(self, presences):
         for presence in presences:
             if presence['puuid'] == self.Requests.puuid:
-                #preventing VAS from crashing when lol is open
+                # preventing VAS from crashing when lol is open
                 # print(presence)
                 # print(presence.get("championId"))
                 if presence.get("championId") is not None or presence.get("product") == "league_of_legends":
