@@ -1,5 +1,6 @@
+#*-* coding: utf-8 *-*
 import win32gui
-import pywintypes
+import pywintypes # fix win32gui dll error
 import asyncio
 import os
 import socket
@@ -36,6 +37,7 @@ from src.stats import Stats
 from src.table import Table
 from src.websocket import Ws
 from src.os import get_os
+from src.get_title import get_title
 
 from src.account_manager.account_manager import AccountManager
 from src.account_manager.account_config import AccountConfig
@@ -49,12 +51,16 @@ os.system(f"title {title_with_version}")
 
 server = ""
 
-# os.system("mode con cols=200 lines=50")
+try:
+    Logging = Logging()
+    log = Logging.log
+except Exception as e:
+    print("Failed to initialize logger!")
+    print(e)
+    input("press enter to exit...\n")
+    os._exit(1)
 
-# import pygetwindow
-# win = pygetwindow.getWindowsWithTitle(title_with_version)[0]
-# win.size = (1536, 864)
-
+# solve table display issue
 os_string = get_os()
 if "Windows 10" in os_string:
     os.system("mode con cols=200 lines=50")
@@ -62,18 +68,29 @@ elif "Windows 11" in os_string:
     try:
         hwnd = win32gui.FindWindow(None, title_with_version)
         x0, y0, x1, y1 = win32gui.GetWindowRect(hwnd)
-        win32gui.MoveWindow(hwnd, x0, y0, x0+1536, y0+864, True)
-    except:
-        print("Do not run with administrator privileges.")
-        input("press enter to exit...\n")
-        os._exit(1)
+        win32gui.MoveWindow(hwnd, x0, y0, x0+1286, y0+654, True)
+    except Exception as check_admin:
+        try:
+            hwnd = win32gui.FindWindow(None, "관리자:  " + title_with_version)
+            x0, y0, x1, y1 = win32gui.GetWindowRect(hwnd)
+            win32gui.MoveWindow(hwnd, x0, y0, x0+1286, y0+654, True)
+        except Exception as check_korean:
+            try:
+                hwnd = win32gui.FindWindow(None, "Administrator:  " + title_with_version)
+                x0, y0, x1, y1 = win32gui.GetWindowRect(hwnd)
+                win32gui.MoveWindow(hwnd, x0, y0, x0+1286, y0+654, True)
+            except Exception as check_english:
+                log(f"Failed to resize window: {check_admin}\n{check_korean}\n{check_english}\n\nAll title name: {get_title()}")
+                print("Do not run with administrative privilege.\nUnless please contact to scottjsh@whitesky.kr with log files.")
+                input("press enter to exit...\n")
+                os._exit(1)
 else:
     print("This tool only supports Windows 10, Windows 11.")
     input("press enter to exit...\n")
     os._exit(1)
 
 
-def program_exit(status: int):  # so we don't need to import the entire sys module
+def program_exit(status: int):
     log(f"exited program with error code {status}")
     raise sys.exit(status)
 
@@ -93,9 +110,6 @@ def get_ip():
 
 
 try:
-    Logging = Logging()
-    log = Logging.log
-
     # OS Logging
     log(f"Operating system: {get_os()}\n")
 

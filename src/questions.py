@@ -1,3 +1,4 @@
+# -*- coding: utf-8 -*-
 from InquirerPy.base.control import Choice
 from src.constants import DEFAULT_CONFIG, WEAPONS
 

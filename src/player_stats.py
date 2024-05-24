@@ -1,4 +1,4 @@
-
+# -*- coding: utf-8 -*-
 class PlayerStats:
     def __init__(self, Requests, log, config):
         self.Requests = Requests

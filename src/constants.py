@@ -1,7 +1,8 @@
+# -*- coding: utf-8 -*-
 import requests
 from colr import color
 
-version = "4.61"
+version = "4.65"
 enablePrivateLogging = True
 hide_names = True
 hide_levels = True

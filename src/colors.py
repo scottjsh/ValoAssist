@@ -1,3 +1,4 @@
+# -*- coding: utf-8 -*-
 from colr import color
 from src.constants import tierDict
 import re

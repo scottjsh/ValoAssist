@@ -1,3 +1,4 @@
+# -*- coding: utf-8 -*-
 import glob
 import os
 import time
@@ -34,4 +35,4 @@ class Logging:
             current_time = time.strftime(
                 "%Y.%m.%d-%H.%M.%S", time.localtime(time.time()))
             log_file.write(
-                f"[{current_time}] {log_string.encode('ascii', 'replace').decode()}\n")
+                f"[{current_time}] {log_string.encode('utf-8', 'replace').decode()}\n")

@@ -1,3 +1,4 @@
+# -*- coding: utf-8 -*-
 import base64
 import json
 import time
@@ -19,9 +20,6 @@ class Presences:
     def get_private_presence(self, presences):
         for presence in presences:
             if presence['puuid'] == self.Requests.puuid:
-                # preventing VAS from crashing when lol is open
-                # print(presence)
-                # print(presence.get("championId"))
                 if presence.get("championId") is not None or presence.get("product") == "league_of_legends":
                     return None
                 else:

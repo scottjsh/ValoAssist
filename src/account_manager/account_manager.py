@@ -1,3 +1,4 @@
+# -*- coding: utf-8 -*-
 import InquirerPy
 import subprocess
 import re

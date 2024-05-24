@@ -1,4 +1,4 @@
-
+# -*- coding: utf-8 -*-
 class Rank:
     def __init__(self, Requests, log, content, ranks_before):
         self.Requests = Requests

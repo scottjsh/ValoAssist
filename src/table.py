@@ -1,3 +1,4 @@
+# -*- coding: utf-8 -*-
 from typing import Literal, get_args
 
 # from prettytable import PrettyTable
