@@ -29,7 +29,7 @@
 
 ## Usage
 1) Open VALORANT
-2) Run VAS.exe **WITHOUT Administrator privilege**
+2) Run VAS.exe **WITHOUT Administrator privilege is recommended**
 
 ### Bundled Release(***Recommended***):
 
