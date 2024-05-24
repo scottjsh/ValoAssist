@@ -1,8 +1,6 @@
+# -*- coding: utf-8 -*-
 import platform
 import sys
-
-# This function detects the OS the user is running and if Valorant is officially supported in said platform
-# returns ["operating system" (string), "Runs Valorant" (bool)]
 
 
 def get_os():

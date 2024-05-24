@@ -1,3 +1,4 @@
+# -*- coding: utf-8 -*-
 import base64
 import json
 import time
@@ -50,16 +51,6 @@ class Requests:
             print(f"New version available! {link}")
             input("press enter to exit...\n")
             os._exit(1)
-            # if sys.argv[0][-3:] == "exe":
-            #     while True:
-            #         update_now = input("Do you want to update now? (Y/n): ")
-            #         if update_now.lower() == "n" or update_now.lower() == "no":
-            #             return
-            #         elif update_now.lower() == "y" or update_now.lower() == "yes" or update_now == "":
-            #             copy_run_update_script(link)
-            #             os._exit(1)
-            #         else:
-            #             print('Invalid input please response with "yes" or "no" ("y", "n") or press enter to update')
 
     @staticmethod
     def copy_run_update_script(link):

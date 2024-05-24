@@ -1,3 +1,4 @@
+# -*- coding: utf-8 -*-
 from pypresence import Presence
 from pypresence.exceptions import DiscordNotFound, InvalidID
 import nest_asyncio
