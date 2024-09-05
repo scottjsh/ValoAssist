@@ -2,7 +2,7 @@
 import requests
 from colr import color
 
-version = "4.65"
+version = "4.67"
 enablePrivateLogging = True
 hide_names = True
 hide_levels = True
@@ -74,6 +74,7 @@ AGENTCOLORLIST = {
     "neon": (28, 69, 161),
     "viper": (48, 186, 135),
     "yoru": (52, 76, 207),
+    "vyse": (97,83,183),
 }
 
 
