@@ -25,7 +25,7 @@ class Content():
             if season["IsActive"]:
                 self.log(f"retrieved previous season id: {previous['ID']}")
                 return previous["ID"]
-            # Only store the previous act.
+
             if (season["Type"] == "episode"):
                 continue
             previous = season
@@ -74,12 +74,76 @@ class Content():
             "act": None,
             "episode": None
         }
+
+        def roman_to_int(roman):
+            """Convert a Roman numeral to an integer."""
+
+            roman_values = {
+                'I': 1,
+                'V': 5,
+                'X': 10,
+                'L': 50,
+                'C': 100
+            }
+        
+            total = 0
+            prev_value = 0
+
+            for char in reversed(roman.upper()):
+                if char not in roman_values:
+                    return None
+            
+                current_value = roman_values[char]
+                if current_value < prev_value:
+                    total -= current_value
+                else:
+                    total += current_value
+                prev_value = current_value
+
+            return total
+
+        def parse_season_number(name):
+            """Parse the season number from a name string.
+            Handles both regular numbers and Roman numerals."""
+            if not name or not isinstance(name, str):
+                return None
+
+            parts = name.split()
+            if not parts:
+                return None
+
+            number_part = parts[-1]
+
+            if name.startswith('EPISODE'):
+                try:
+                    return int(number_part)
+                except ValueError:
+                    return roman_to_int(number_part)
+
+            elif name.startswith('ACT'):
+                roman_result = roman_to_int(number_part)
+                if roman_result is not None:
+                    return roman_result
+            
+                try:
+                    return int(number_part)
+                except ValueError:
+                    return None
+
+            return None
+
         act_found = False
         for season in self.content["Seasons"]:
             if season["ID"].lower() == act_id.lower():
-                final["act"] = int(season["Name"][-1])
+                act_num = parse_season_number(season["Name"])
+                if act_num is not None:
+                    final["act"] = act_num
                 act_found = True
+
             if act_found and season["Type"] == "episode":
-                final["episode"] = int(season["Name"][-1])
+                episode_num = parse_season_number(season["Name"])
+                if episode_num is not None:
+                    final["episode"] = episode_num
                 break
+
         return final
