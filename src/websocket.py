@@ -9,7 +9,7 @@ from colr import color
 
 
 class Ws:
-    def __init__(self, lockfile, Requests, cfg, colors, hide_names, chatlog, server, rpc=None):
+    def __init__(self, lockfile, Requests, cfg, colors, hide_names, server, rpc=None):
 
         self.lockfile = lockfile
         self.Requests = Requests
@@ -26,7 +26,6 @@ class Ws:
         self.message_history = []
         self.up = "\033[A"
         self.chat_limit = cfg.chat_limit
-        self.chatlog = chatlog
         self.server = server
         if self.cfg.get_feature_flag("discord_rpc"):
             self.rpc = rpc
@@ -130,7 +129,6 @@ class Ws:
                         self.id_seen.append(message['id'])
 
     def print_message(self, message):
-        self.chatlog(message)
         self.messages += 1
         if self.messages > self.chat_limit:
             print(self.up * self.chat_limit, end="")
