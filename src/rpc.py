@@ -11,7 +11,7 @@ class Rpc():
         self.log = log
         self.discord_running = True
         try:
-            self.rpc = Presence("1012402211134910546")
+            self.rpc = Presence("1333236759458222111")
             self.rpc.connect()
             self.log("Connected to discord")
         except DiscordNotFound:
@@ -140,7 +140,7 @@ class Rpc():
                 self.discord_running = False
         else:
             try:
-                self.rpc = Presence("1012402211134910546")
+                self.rpc = Presence("1333236759458222111")
                 self.rpc.connect()
                 self.discord_running = True
                 self.log("Reconnected to discord")
