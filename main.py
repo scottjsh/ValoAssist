@@ -406,6 +406,7 @@ try:
                         ppstats = pstats.get_stats(player["Subject"])
                         hs = ppstats["hs"]
                         kd = ppstats["kd"]
+                        ranked_rating_earned = ppstats["RankedRatingEarned"]
 
                         player_level = player["PlayerIdentity"].get(
                             "AccountLevel")
@@ -486,6 +487,7 @@ try:
                                              skin,
                                              rankName,
                                              rr,
+                                             ranked_rating_earned,
                                              peakRank,
                                              previousRank,
                                              leaderboard,
@@ -599,6 +601,7 @@ try:
                         ppstats = pstats.get_stats(player["Subject"])
                         hs = ppstats["hs"]
                         kd = ppstats["kd"]
+                        ranked_rating_earned = ppstats["RankedRatingEarned"]
 
                         player_level = player["PlayerIdentity"].get(
                             "AccountLevel")
@@ -681,13 +684,14 @@ try:
                                              "",
                                              rankName,
                                              rr,
+                                             ranked_rating_earned,
                                              peakRank,
                                              previousRank,
                                              leaderboard,
                                              hs,
                                              wr,
                                              kd,
-                                             level,
+                                             level
                                              ])
 
                         heartbeat_data["players"][player["Subject"]] = {
@@ -744,6 +748,7 @@ try:
                             ppstats = pstats.get_stats(player["Subject"])
                             hs = ppstats["hs"]
                             kd = ppstats["kd"]
+                            ranked_rating_earned = ppstats["RankedRatingEarned"]
 
                             player_level = player["PlayerIdentity"].get(
                                 "AccountLevel")
@@ -796,6 +801,7 @@ try:
                                                 "",
                                                  rankName,
                                                  rr,
+                                                 ranked_rating_earned,
                                                  peakRank,
                                                  previousRank,
                                                  leaderboard,
