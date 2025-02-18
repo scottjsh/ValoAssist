@@ -131,6 +131,19 @@ class Colors:
                         f.append(
                             int(offset * number / gradient[1] + gradients[gradient][0][rgb]))
                 return color(number, fore=f)
+            
+    def get_rr_gradient(self, rr_value):
+        """Returns RR value in green if positive, red if negative, and white if zero."""
+        try:
+            rr_value = int(rr_value)
+        except ValueError:
+            return color("N/a", fore=(46, 46, 46))
+        if rr_value > 0:
+            return color(f"+{rr_value}", fore=(18, 204, 25))  # Green for positive RR
+        elif rr_value < 0:
+            return color(f"{rr_value}", fore=(241, 39, 39))  # Red for negative RR
+        else:
+            return color(f"{rr_value}", fore=(255, 255, 255))  # White for zero RR
 
     def escape_ansi(self, line):
         ansi_escape = re.compile(r'(?:\x1B[@-_]|[\x80-\x9F])[0-?]*[ -/]*[@-~]')
