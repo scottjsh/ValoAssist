@@ -406,8 +406,10 @@ try:
                         ppstats = pstats.get_stats(player["Subject"])
                         hs = ppstats["hs"]
                         kd = ppstats["kd"]
+                        rr_numeric_value = ppstats["RankedRatingEarned"]
+                        afk_penalty = ppstats["AFKPenalty"]
                         ranked_rating_earned = colors.get_rr_gradient(
-                            ppstats["RankedRatingEarned"]
+                            rr_numeric_value, afk_penalty
                         )
 
                         player_level = player["PlayerIdentity"].get(
@@ -603,8 +605,10 @@ try:
                         ppstats = pstats.get_stats(player["Subject"])
                         hs = ppstats["hs"]
                         kd = ppstats["kd"]
+                        rr_numeric_value = ppstats["RankedRatingEarned"]
+                        afk_penalty = ppstats["AFKPenalty"]
                         ranked_rating_earned = colors.get_rr_gradient(
-                            ppstats["RankedRatingEarned"]
+                            rr_numeric_value, afk_penalty
                         )
 
                         player_level = player["PlayerIdentity"].get(
@@ -752,9 +756,11 @@ try:
                             ppstats = pstats.get_stats(player["Subject"])
                             hs = ppstats["hs"]
                             kd = ppstats["kd"]
+                            rr_numeric_value = ppstats["RankedRatingEarned"]
+                            afk_penalty = ppstats["AFKPenalty"]
                             ranked_rating_earned = colors.get_rr_gradient(
-                            ppstats["RankedRatingEarned"]
-                        )
+                                rr_numeric_value, afk_penalty
+                            )
 
                             player_level = player["PlayerIdentity"].get(
                                 "AccountLevel")
