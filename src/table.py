@@ -12,7 +12,7 @@ TABLE_COLUMN_NAMES = Literal[
     "Skin",
     "Rank",
     "RR",
-    "ΔRR"
+    "ΔRR",
     "Peak Rank",
     "Previous Act Rank",
     "Pos.",
