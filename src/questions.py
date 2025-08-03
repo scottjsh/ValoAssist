@@ -22,7 +22,8 @@ FLAGS_OPTS = {
     "game_chat": "Print Game Chat",
     "peak_rank_act": "Peak Rank Act",
     "discord_rpc": "Discord Rich Presence",
-    "aggregate_rank_rr": "Display Rank and Ranked Rating in the same column"
+    "aggregate_rank_rr": "Display Rank and Ranked Rating in the same column",
+    "server_id": "Show Server ID"
 }
 
 
