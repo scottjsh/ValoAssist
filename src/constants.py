@@ -183,6 +183,6 @@ DEFAULT_CONFIG = {
         "peak_rank_act": True,
         "discord_rpc": False,
         "aggregate_rank_rr": True,
-        "server_id": False
+        "server_id": True
     }
 }
