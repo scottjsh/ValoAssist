@@ -48,6 +48,8 @@ title_with_version = f"ValoAssist v{version}"
 
 os.system(f"title {title_with_version}")
 
+server = ""
+
 try:
     Logging = Logging()
     log = Logging.log
@@ -293,6 +295,7 @@ try:
                                         "team": player["TeamID"], "agent": player["CharacterID"], "streamer_mode": player["PlayerIdentity"]["Incognito"]}})
                 Wss.set_player_data(players_data)
 
+                server = coregame_stats.get("GamePodID", "")
                 presences.wait_for_presence(
                     namesClass.get_players_puuid(Players))
                 names = namesClass.get_names_from_puuids(Players)
@@ -535,6 +538,7 @@ try:
                 pregame_stats = pregame.get_pregame_stats()
                 if pregame_stats == None:
                     continue
+                server = pregame_stats.get("GamePodID", "")
                 Players = pregame_stats["AllyTeam"]["Players"]
                 presences.wait_for_presence(
                     namesClass.get_players_puuid(Players))
@@ -830,7 +834,20 @@ try:
             if (title := game_state_dict.get(game_state)) is None:
                 # program_exit(1)
                 time.sleep(9)
-            table.set_title(f"VALORANT status: {title}")
+            if cfg.get_feature_flag("server_id") and server != "":
+                parts = server.split('.')
+                if len(parts) > 2:
+                    short_serverID = '.'.join(parts[2:])
+                else:
+                    short_serverID = server
+
+                table.set_title(
+                    f"VALORANT status: {title} {colr('- ' + short_serverID, fore=(200, 200, 200))}"
+                )
+            else:
+                table.set_title(f"VALORANT status: {title}")
+            
+            server = ""
             if title is not None:
                 if cfg.get_feature_flag("auto_hide_leaderboard") and (not is_leaderboard_needed):
                     table.set_runtime_col_flag('Pos.', False)
