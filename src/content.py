@@ -142,6 +142,8 @@ class Content():
             return None
 
         act_found = False
+        episode = []
+        episode = self.content["Seasons"][0]
         for season in self.content["Seasons"]:
             if season["ID"].lower() == act_id.lower():
                 act_num = parse_season_number(season["Name"])
@@ -150,9 +152,12 @@ class Content():
                 act_found = True
 
             if act_found and season["Type"] == "episode":
-                episode_num = parse_season_number(season["Name"])
+                episode_num = parse_season_number(episode["Name"])
                 if episode_num is not None:
                     final["episode"] = episode_num
                 break
+
+            if season["Type"] == "episode":
+                episode = season
 
         return final
