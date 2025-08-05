@@ -48,9 +48,11 @@ class Loadouts:
                         if skin_id.lower() == skin["uuid"].lower():
                             rgb_color = self.colors.get_rgb_color_from_skin(
                                 skin["uuid"].lower(), valoApiSkins)
+                            skin_display_name = skin["displayName"].replace(
+                                f" {weapon['displayName']}", "")
                             # if rgb_color is not None:
                             weaponLists.update({players[player]["Subject"]: color(
-                                skin["displayName"], fore=rgb_color)})
+                                skin_display_name, fore=rgb_color)})
                             # else:
                             #     weaponLists.update({player["Subject"]: color(skin["Name"], fore=rgb_color)})
         final_json = self.convertLoadoutToJsonArray(
