@@ -49,6 +49,7 @@ title_with_version = f"ValoAssist v{version}"
 os.system(f"title {title_with_version}")
 
 server = ""
+team_side = None
 
 try:
     Logging = Logging()
@@ -204,6 +205,11 @@ try:
         table.clear()
         table.set_default_field_names()
         table.reset_runtime_col_flags()
+
+        if cfg.get_feature_flag("short_ranks"):
+            Ranks = SHORT_NUMBERTORANKS
+        else:
+            Ranks = NUMBERTORANKS
 
         try:
 
@@ -449,7 +455,7 @@ try:
                         skin = loadouts.get(player["Subject"], "")
 
                         # RANK
-                        rankName = NUMBERTORANKS[playerRank["rank"]]
+                        rankName = Ranks[playerRank["rank"]]
                         if cfg.get_feature_flag("aggregate_rank_rr") and cfg.table.get("rr"):
                             rankName += f" ({playerRank['rr']})"
 
@@ -463,11 +469,11 @@ try:
                             peakRankAct = ""
 
                         # PEAK RANK
-                        peakRank = NUMBERTORANKS[playerRank["peakrank"]
+                        peakRank = Ranks[playerRank["peakrank"]
                                                  ] + peakRankAct
 
                         # PREVIOUS RANK
-                        previousRank = NUMBERTORANKS[previousPlayerRank["rank"]]
+                        previousRank = Ranks[previousPlayerRank["rank"]]
 
                         # LEADERBOARD
                         leaderboard = playerRank["leaderboard"]
@@ -647,7 +653,7 @@ try:
                         # skin = loadouts[player["Subject"]]
 
                         # RANK
-                        rankName = NUMBERTORANKS[playerRank["rank"]]
+                        rankName = Ranks[playerRank["rank"]]
                         if cfg.get_feature_flag("aggregate_rank_rr") and cfg.table.get("rr"):
                             rankName += f" ({playerRank['rr']})"
 
@@ -660,11 +666,11 @@ try:
                         if not cfg.get_feature_flag("peak_rank_act"):
                             peakRankAct = ""
                         # PEAK RANK
-                        peakRank = NUMBERTORANKS[playerRank["peakrank"]
+                        peakRank = Ranks[playerRank["peakrank"]
                                                  ] + peakRankAct
 
                         # PREVIOUS RANK
-                        previousRank = NUMBERTORANKS[previousPlayerRank["rank"]]
+                        previousRank = Ranks[previousPlayerRank["rank"]]
 
                         # LEADERBOARD
                         leaderboard = playerRank["leaderboard"]
@@ -712,6 +718,7 @@ try:
 
                         # bar()
             if game_state == "MENUS":
+                server = ""
                 already_played_with = []
                 Players = menu.get_party_members(Requests.puuid, presence)
                 names = namesClass.get_names_from_puuids(Players)
@@ -768,7 +775,7 @@ try:
                                 names[player["Subject"]], fore=(76, 151, 237))
 
                             # RANK
-                            rankName = NUMBERTORANKS[playerRank["rank"]]
+                            rankName = Ranks[playerRank["rank"]]
                             if cfg.get_feature_flag("aggregate_rank_rr") and cfg.table.get("rr"):
                                 rankName += f" ({playerRank['rr']})"
 
@@ -782,11 +789,11 @@ try:
                                 peakRankAct = ""
 
                             # PEAK RANK
-                            peakRank = NUMBERTORANKS[playerRank["peakrank"]
+                            peakRank = Ranks[playerRank["peakrank"]
                                                      ] + peakRankAct
 
                             # PREVIOUS RANK
-                            previousRank = NUMBERTORANKS[previousPlayerRank["rank"]]
+                            previousRank = Ranks[previousPlayerRank["rank"]]
 
                             # LEADERBOARD
                             leaderboard = playerRank["leaderboard"]
@@ -834,6 +841,13 @@ try:
             if (title := game_state_dict.get(game_state)) is None:
                 # program_exit(1)
                 time.sleep(9)
+                
+                title_parts = [f"VALORANT status: {title}"]
+            
+            if game_state == "PREGAME" and pregame_stats is not None and cfg.get_feature_flag("starting_side"):
+                team_side = "Attacker" if pregame_stats["AllyTeam"]["TeamID"] == "Red" else "Defender"
+                title_parts.append(f" | {colr(team_side, fore=(76, 151, 237) if team_side == 'Defender' else (238, 77, 77))}")
+                
             if cfg.get_feature_flag("server_id") and server != "":
                 parts = server.split('.')
                 if len(parts) > 2:
@@ -841,13 +855,10 @@ try:
                 else:
                     short_serverID = server
 
-                table.set_title(
-                    f"VALORANT status: {title} {colr('- ' + short_serverID, fore=(200, 200, 200))}"
-                )
-            else:
-                table.set_title(f"VALORANT status: {title}")
+                title_parts.append(f" {colr('- ' + short_serverID, fore=(200, 200, 200))}")
             
-            server = ""
+            table.set_title(''.join(title_parts))
+            
             if title is not None:
                 if cfg.get_feature_flag("auto_hide_leaderboard") and (not is_leaderboard_needed):
                     table.set_runtime_col_flag('Pos.', False)
