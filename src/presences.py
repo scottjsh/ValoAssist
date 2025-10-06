@@ -15,7 +15,11 @@ class Presences:
         return presences['presences']
 
     def get_game_state(self, presences):
-        return self.get_private_presence(presences)["sessionLoopState"]
+        private_presence = self.get_private_presence(presences)
+        if private_presence and "sessionLoopState" in private_presence:
+            return private_presence["sessionLoopState"]
+        else:
+            return None  # 또는 적절한 기본값/에러 처리
 
     def get_private_presence(self, presences):
         for presence in presences:
