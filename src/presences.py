@@ -3,19 +3,20 @@ import base64
 import json
 import time
 
-
 class Presences:
     def __init__(self, Requests, log):
         self.Requests = Requests
         self.log = log
 
     def get_presence(self):
-        presences = self.Requests.fetch(
-            url_type="local", endpoint="/chat/v4/presences", method="get")
+        presences = self.Requests.fetch(url_type="local", endpoint="/chat/v4/presences", method="get")
         return presences['presences']
 
     def get_game_state(self, presences):
-        return self.get_private_presence(presences)["sessionLoopState"]
+        private_presence = self.get_private_presence(presences)
+        if private_presence:
+            return private_presence["matchPresenceData"]["sessionLoopState"]
+        return None
 
     def get_private_presence(self, presences):
         for presence in presences:
@@ -23,7 +24,11 @@ class Presences:
                 if presence.get("championId") is not None or presence.get("product") == "league_of_legends":
                     return None
                 else:
-                    return json.loads(base64.b64decode(presence['private']))
+                    if presence['private'] == "": 
+                        return None
+                    decoded_private = json.loads(base64.b64decode(presence['private']))
+                    return decoded_private
+        return None
 
     def decode_presence(self, private):
         # try:
