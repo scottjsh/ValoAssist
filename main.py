@@ -1,6 +1,6 @@
-#*-* coding: utf-8 *-*
+# *-* coding: utf-8 *-*
 import win32gui
-import pywintypes # fix win32gui dll error
+import pywintypes  # fix win32gui dll error
 import asyncio
 import os
 import socket
@@ -76,12 +76,14 @@ elif "Windows 11" in os_string:
             win32gui.MoveWindow(hwnd, x0, y0, x0+1286, y0+654, True)
         except Exception as check_korean:
             try:
-                hwnd = win32gui.FindWindow(None, "Administrator:  " + title_with_version)
+                hwnd = win32gui.FindWindow(
+                    None, "Administrator:  " + title_with_version)
                 x0, y0, x1, y1 = win32gui.GetWindowRect(hwnd)
                 win32gui.MoveWindow(hwnd, x0, y0, x0+1286, y0+654, True)
             except Exception as check_english:
                 log(f"Failed to resize window: {check_admin}\n{check_korean}\n{check_english}\n\nAll title name: {get_title()}")
-                print("Do not run with administrative privilege.\nUnless please contact to scottjsh@whitesky.kr with log files.")
+                print(
+                    "Do not run with administrative privilege.\nUnless please contact to scottjsh@whitesky.kr with log files.")
                 input("press enter to exit...\n")
                 os._exit(1)
 else:
@@ -196,7 +198,7 @@ try:
     # print("\nVAS Mobile", color(f"- {get_ip()}:{cfg.port}", fore=(255, 127, 80)))
 
     print(color("\nVisit https://whitesky.kr/ValoAssist_web/ to view full player inventories\n", fore=(255, 253, 205)))
-    
+
     richConsole = RichConsole()
 
     firstTime = True
@@ -222,17 +224,16 @@ try:
             if firstTime:
                 run = True
                 while run:
-                    while True:
-                        presence = presences.get_presence()
-                        # wait until your own valorant presence is initialized
-                        if presences.get_private_presence(presence) != None:
-                            break
-                        time.sleep(5)
-                    if cfg.get_feature_flag("discord_rpc"):
-                        rpc.set_rpc(presences.get_private_presence(presence))
-                    game_state = presences.get_game_state(presence)
-                    if game_state != None:
-                        run = False
+                    presence = presences.get_presence()
+                    private_presence = presences.get_private_presence(presence)
+                    # wait until your own valorant presence is initialized
+                    if private_presence is not None:
+                        if cfg.get_feature_flag("discord_rpc"):
+                            rpc.set_rpc(private_presence)
+                        game_state = presences.get_game_state(presence)
+                        if game_state is not None:
+                            run = False
+
                     time.sleep(2)
                 log(f"first game state: {game_state}")
             else:
@@ -254,7 +255,8 @@ try:
             game_state = "DISCONNECTED"
 
         if game_state == "DISCONNECTED":
-            richConsole.print("[yellow]Disconnected from Valorant. Attempting to reconnect...[/yellow]")
+            richConsole.print(
+                "[yellow]Disconnected from Valorant. Attempting to reconnect...[/yellow]")
             # Loop waits for the Valorant client to respond
             while True:
                 # Rereads the lockfile
@@ -265,22 +267,24 @@ try:
                     continue
 
                 presence_check = presences.get_presence()
-                
+
                 if presence_check is not None:
-                    break 
-                
+                    break
+
                 time.sleep(5)
 
-            richConsole.print("[green]Reconnected successfully! Loading...[/green]")
-            
+            richConsole.print(
+                "[green]Reconnected successfully! Loading...[/green]")
+
             Requests.get_headers(refresh=True)
 
-            Wss = Ws(Requests.lockfile, Requests, cfg, colors, hide_names, Server, rpc)
+            Wss = Ws(Requests.lockfile, Requests, cfg,
+                     colors, hide_names, Server, rpc)
 
-            firstTime = True 
+            firstTime = True
             lastGameState = ""
             continue
-            
+
         if True:
             log(f"getting new {game_state} scoreboard")
             lastGameState = game_state
@@ -295,14 +299,15 @@ try:
 
             is_leaderboard_needed = False
 
+            # get new presence
             presence = presences.get_presence()
             priv_presence = presences.get_private_presence(presence)
 
             # Temp fix: Riot is swapping between nested and flat API structures.
             party_state = ""
-            if "partyPresenceData" in priv_presence: # Check for nested structure
+            if "partyPresenceData" in priv_presence:  # Check for nested structure
                 party_state = priv_presence["partyPresenceData"]["partyState"]
-            elif "partyState" in priv_presence: # Check for flattened structure
+            elif "partyState" in priv_presence:  # Check for flattened structure
                 party_state = priv_presence["partyState"]
             else:
                 # No known structure found, log and fail
@@ -328,7 +333,6 @@ try:
                     continue
                 Players = coregame_stats["Players"]
                 # data for chat to function
-                presence = presences.get_presence()
                 partyMembers = menu.get_party_members(Requests.puuid, presence)
                 partyMembersList = [a["Subject"] for a in partyMembers]
 
@@ -504,14 +508,15 @@ try:
                         rr = playerRank["rr"]
 
                         # short peak rank string
-                        has_letter = any(c.isalpha() for c in str(playerRank['peakrankep']))
+                        has_letter = any(c.isalpha()
+                                         for c in str(playerRank['peakrankep']))
                         peakRankAct = f" ({playerRank['peakrankep']}a{playerRank['peakrankact']})" if has_letter else f" (e{playerRank['peakrankep']}a{playerRank['peakrankact']})"
                         if not cfg.get_feature_flag("peak_rank_act"):
                             peakRankAct = ""
 
                         # PEAK RANK
                         peakRank = Ranks[playerRank["peakrank"]
-                                                 ] + peakRankAct
+                                         ] + peakRankAct
 
                         # PREVIOUS RANK
                         previousRank = Ranks[previousPlayerRank["rank"]]
@@ -702,13 +707,14 @@ try:
                         rr = playerRank["rr"]
 
                         # short peak rank string
-                        has_letter = any(c.isalpha() for c in str(playerRank['peakrankep']))
+                        has_letter = any(c.isalpha()
+                                         for c in str(playerRank['peakrankep']))
                         peakRankAct = f" ({playerRank['peakrankep']}a{playerRank['peakrankact']})" if has_letter else f" (e{playerRank['peakrankep']}a{playerRank['peakrankact']})"
                         if not cfg.get_feature_flag("peak_rank_act"):
                             peakRankAct = ""
                         # PEAK RANK
                         peakRank = Ranks[playerRank["peakrank"]
-                                                 ] + peakRankAct
+                                         ] + peakRankAct
 
                         # PREVIOUS RANK
                         previousRank = Ranks[previousPlayerRank["rank"]]
@@ -824,14 +830,15 @@ try:
                             rr = playerRank["rr"]
 
                             # short peak rank string
-                            has_letter = any(c.isalpha() for c in str(playerRank['peakrankep']))
+                            has_letter = any(c.isalpha()
+                                             for c in str(playerRank['peakrankep']))
                             peakRankAct = f" ({playerRank['peakrankep']}a{playerRank['peakrankact']})" if has_letter else f" (e{playerRank['peakrankep']}a{playerRank['peakrankact']})"
                             if not cfg.get_feature_flag("peak_rank_act"):
                                 peakRankAct = ""
 
                             # PEAK RANK
                             peakRank = Ranks[playerRank["peakrank"]
-                                                     ] + peakRankAct
+                                             ] + peakRankAct
 
                             # PREVIOUS RANK
                             previousRank = Ranks[previousPlayerRank["rank"]]
@@ -882,13 +889,14 @@ try:
             if (title := game_state_dict.get(game_state)) is None:
                 # program_exit(1)
                 time.sleep(9)
-                
-                title_parts = [f"VALORANT status: {title}"]
-            
+
+            title_parts = [f"VALORANT status: {title}"]
+
             if game_state == "PREGAME" and pregame_stats is not None and cfg.get_feature_flag("starting_side"):
                 team_side = "Attacker" if pregame_stats["AllyTeam"]["TeamID"] == "Red" else "Defender"
-                title_parts.append(f" | {colr(team_side, fore=(76, 151, 237) if team_side == 'Defender' else (238, 77, 77))}")
-                
+                title_parts.append(
+                    f" | {colr(team_side, fore=(76, 151, 237) if team_side == 'Defender' else (238, 77, 77))}")
+
             if cfg.get_feature_flag("server_id") and server != "":
                 parts = server.split('.')
                 if len(parts) > 2:
@@ -896,10 +904,11 @@ try:
                 else:
                     short_serverID = server
 
-                title_parts.append(f" {colr('- ' + short_serverID, fore=(200, 200, 200))}")
-            
+                title_parts.append(
+                    f" {colr('- ' + short_serverID, fore=(200, 200, 200))}")
+
             table.set_title(''.join(title_parts))
-            
+
             if title is not None:
                 if cfg.get_feature_flag("auto_hide_leaderboard") and (not is_leaderboard_needed):
                     table.set_runtime_col_flag('Pos.', False)
