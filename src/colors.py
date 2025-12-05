@@ -5,18 +5,22 @@ import re
 
 
 class Colors:
-    def __init__(self, hide_names, agent_dict, AGENTCOLORLIST):
+    def __init__(self, log, hide_names, agent_dict, AGENTCOLORLIST):
+        self.hide_names = hide_names
         self.hide_names = hide_names
         self.agent_dict = agent_dict
         self.tier_dict = tierDict
         self.AGENTCOLORLIST = AGENTCOLORLIST
+        self.log = log
 
     def get_color_from_team(self, team, name, playerPuuid, selfPuuid, agent=None, party_members=None):
         orig_name = name
         if agent is not None:
             if self.hide_names:
                 if agent != "":
-                    name = self.agent_dict.get(agent.lower(), "Player")
+                    name = self.agent_dict[agent.lower()]
+                else:
+                    name = "Player"
         if team == 'Red':
             if playerPuuid not in party_members:
                 Teamcolor = color(name, fore=(238, 77, 77))
@@ -34,9 +38,15 @@ class Colors:
         return Teamcolor
 
     def get_rgb_color_from_skin(self, skin_id, valoApiSkins):
-        for skin in valoApiSkins.json()["data"]:
+        json_data = valoApiSkins.json()
+
+        if "data" not in json_data:
+            self.log("Skins API response missing 'data'.")
+            return None
+
+        for skin in json_data["data"]:
             if skin_id == skin["uuid"]:
-                return self.tier_dict[skin["contentTierUuid"]]
+                return self.tier_dict.get(skin.get('contentTierUuid'))
 
     def level_to_color(self, level):
         if level >= 400:

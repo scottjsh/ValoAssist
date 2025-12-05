@@ -2,7 +2,7 @@
 import requests
 from colr import color
 
-version = "4.92"
+version = "4.93"
 enablePrivateLogging = True
 hide_names = True
 hide_levels = True
@@ -54,31 +54,31 @@ sockets = {
 AGENTCOLORLIST = {
     "none": (100, 100, 100),
     "astra": (113, 42, 232),
-    "breach": (217, 122, 46),
-    "brimstone": (217, 122, 46),
-    "cypher": (245, 240, 230),
-    "chamber": (200, 200, 200),
-    "clove": (113, 42, 232),
+    "breach": (199, 107, 59),
+    "brimstone": (209, 105, 31),
+    "cypher": (230, 217, 197),
+    "chamber": (184, 154, 70),
     "deadlock": (102, 119, 176),
     "fade": (92, 92, 94),
-    "gekko": (60, 179, 113),
-    "harbor": (0, 128, 128),
-    "iso": (154, 222, 255),
     "jett": (154, 222, 255),
     "kay/o": (133, 146, 156),
     "killjoy": (255, 217, 31),
     "omen": (71, 80, 143),
     "phoenix": (254, 130, 102),
-    "raze": (217, 122, 46),
+    "raze": (255, 164, 0),
     "reyna": (181, 101, 181),
-    "sage": (90, 230, 213),
+    "sage": (38, 200, 175),
     "skye": (192, 230, 158),
-    "sova": (37, 143, 204),
-    "neon": (28, 69, 161),
+    "sova": (59, 160, 229),
+    "neon": (0, 207, 255),
+    "viper": (56, 198, 89),
+    "yoru": (40, 70, 200),
+    "harbor": (0, 128, 128),
+    "gekko": (168, 230, 94),
+    "vyse": (101, 107, 139),
+    "iso": (87, 74, 194),
+    "clove": (242, 143, 208),
     "tejo": (255, 183, 97),
-    "viper": (48, 186, 135),
-    "yoru": (52, 76, 207),
-    "vyse": (97,83,183),
 }
 
 

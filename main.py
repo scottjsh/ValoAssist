@@ -167,7 +167,7 @@ try:
 
     current_map = coregame.get_current_map(map_urls, map_splashes)
 
-    colors = Colors(hide_names, agent_dict, AGENTCOLORLIST)
+    colors = Colors(log, hide_names, agent_dict, AGENTCOLORLIST)
 
     loadoutsClass = Loadouts(Requests, log, colors, Server, current_map)
     table = Table(cfg, log)
@@ -295,8 +295,20 @@ try:
 
             is_leaderboard_needed = False
 
-            priv_presence = presences.get_private_presence(presence)
-            if priv_presence["provisioningFlow"] == "CustomGame" or priv_presence["partyState"] == "CUSTOM_GAME_SETUP":
+            presence = presences.get_presence()
+
+            # Temp fix: Riot is swapping between nested and flat API structures.
+            party_state = ""
+            if "partyPresenceData" in priv_presence: # Check for nested structure
+                party_state = priv_presence["partyPresenceData"]["partyState"]
+            elif "partyState" in priv_presence: # Check for flattened structure
+                party_state = priv_presence["partyState"]
+            else:
+                # No known structure found, log and fail
+                log("ERROR: Unknown presence API structure in 'main'.")
+                party_state = priv_presence["partyPresenceData"]["partyState"]
+
+            if priv_presence["provisioningFlow"] == "CustomGame" or party_state == "CUSTOM_GAME_SETUP":
                 gamemode = "Custom Game"
             else:
                 gamemode = gamemodes.get(priv_presence['queueId'])
