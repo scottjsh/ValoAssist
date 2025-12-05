@@ -296,6 +296,7 @@ try:
             is_leaderboard_needed = False
 
             presence = presences.get_presence()
+            priv_presence = presences.get_private_presence(presence)
 
             # Temp fix: Riot is swapping between nested and flat API structures.
             party_state = ""
